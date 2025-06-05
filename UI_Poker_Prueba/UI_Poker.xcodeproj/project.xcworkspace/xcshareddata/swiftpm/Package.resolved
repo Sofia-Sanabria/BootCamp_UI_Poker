@@ -1,0 +1,24 @@
+{
+  "originHash" : "e4fd8630053442cbd9f21674a05d46aee3e2f586389e63538dd2bfed7b23089f",
+  "pins" : [
+    {
+      "identity" : "alamofire",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Alamofire/Alamofire",
+      "state" : {
+        "revision" : "513364f870f6bfc468f9d2ff0a95caccc10044c5",
+        "version" : "5.10.2"
+      }
+    },
+    {
+      "identity" : "pokemonapi",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/kinkofer/PokemonAPI",
+      "state" : {
+        "revision" : "d9fa1d298e986105d9f0195095fdeadbbb5bc361",
+        "version" : "7.0.3"
+      }
+    }
+  ],
+  "version" : 3
+}
