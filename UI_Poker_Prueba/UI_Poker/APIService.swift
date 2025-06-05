@@ -34,7 +34,6 @@ struct ScoreRequest: Codable {
     let game_id: Int
     let score: Int
     let date: String
-    let nombre: String?
 }
 
 
@@ -81,7 +80,8 @@ class APIService {
                 if let user = response.user {
                     let token = response.access_token            // JWT
                     let userID = user.id                         // ID del usuario
-                    let nombre = user.user_metadata?.nombre      // Nombre guardado en metadata
+                    let nombre = user.user_metadata?.nombre
+                    SesionUsuario.shared.nombre = nombre// Nombre guardado en metadata
                     
                     completion(.success((token: token, userID: userID, nombre: nombre)))
                 } else {
@@ -139,8 +139,9 @@ class APIService {
     // Esta función obtiene una lista de puntajes desde la tabla "scores" en Supabase.
     func obtenerPuntajes(gameID: String, token: String, completion: @escaping (Result<[ScoreRequest], APIError>) -> Void) {
         
+        let userID = UserDefaults.standard.string(forKey: "userID")
         // Construir el endpoint con filtros
-        let endpoint = "\(baseURL)/rest/v1/scores?select=user_id,game_id,score,date,nombre&game_id=eq.\(gameID)&order=score.desc"
+        let endpoint = "\(baseURL)/rest/v1/scores?user_id=eq.\(userID ?? "")"
         
         // Encabezados necesarios para autenticar
         let headers: APIHeaders = [
@@ -164,11 +165,12 @@ class APIService {
     }
     
     // Envía un puntaje para un juego específico a la tabla "scores" en Supabase.
-    func registrarPuntaje(nombre: String, userID: String, gameID: String, score: Int, token: String, completion: @escaping (Result<Void, APIError>) -> Void) {
+    func registrarPuntaje(userID: String, gameID: String, score: Int, token: String, completion: @escaping (Result<Void, APIError>) -> Void) {
         let endpoint = "\(baseURL)/rest/v1/scores" // Endpoint para registrar puntaje
         
         // Obtenemos la fecha actual
         let fecha = Date().formatearFecha()
+        
         
         // Parámetros que enviamos en el body de la solicitud
         let parameters: APIParameters = [
@@ -176,7 +178,7 @@ class APIService {
             "game_id": gameID,
             "score": score,
             "date": fecha,
-            "nombre": nombre
+            
         ]
         
         print("Enviando parámetros: \(parameters)")

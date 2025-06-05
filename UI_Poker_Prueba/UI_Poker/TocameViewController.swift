@@ -126,9 +126,9 @@ class TocameViewController: UIViewController {
         
         let puntajeActual = puntaje
         let gameID = "1"
-        
+//        let nombreJugador = SesionUsuario.shared.accessToken
         // Enviar el score, gameID y date automaticamente a Supabase.
-        APIService.shared.registrarPuntaje(nombre: jugador1Text, userID: userID, gameID: gameID, score: puntajeActual, token: token) { result in
+        APIService.shared.registrarPuntaje(userID: userID, gameID: gameID, score: puntajeActual, token: token) { result in
             switch result {
             case .success():
                 print("Puntaje registrado correctamente en Supabase")

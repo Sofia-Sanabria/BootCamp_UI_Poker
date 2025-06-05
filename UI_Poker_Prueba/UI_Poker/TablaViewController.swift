@@ -58,7 +58,7 @@ class TablaViewController: UIViewController, UITableViewDelegate, UITableViewDat
                     // Mostrar los puntajes del jugador que inicio sesion
                     if self?.mostrarSoloJugador == true {
                         self?.mejoresPuntajes = todosLosPuntajes
-                            .filter { $0.nombre == self?.nombreJugador } // Filtrar por nombre exacto
+//                            .filter { $0.nombre == self?.nombreJugador } // Filtrar por nombre exacto
                             .sorted { $0.score > $1.score }
                             .prefix(self?.cantidadTop ?? 5)
                             .map { $0 }
@@ -111,7 +111,7 @@ extension TablaViewController {
         let entrada = mejoresPuntajes[indexPath.row]
         
         // Se asignan los textos a los labels
-        cell?.textLabel?.text = entrada.nombre ?? "Jugador"
+        cell?.textLabel?.text = SesionUsuario.shared.nombre ?? "Jugador"
         cell?.detailTextLabel?.text = "\(entrada.score) pts - \(entrada.date)"
         
         return cell!
